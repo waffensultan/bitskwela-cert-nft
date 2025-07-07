@@ -4,7 +4,7 @@ Todos:
             Build:
                 ☐ Inputs: Recipient address, metadata URI
                 ☐ Mint function gated by an admin role (onlyRole(ADMIN_ROLE))
-                    ☐ Use OpenZeppelin's AccessControl
+                ☐ Use OpenZeppelin's AccessControl
             Tasks:
                 ☐ Write unit tests (Hardhat)
                 ☐ Deploy contract to Sepolia testnet using Hardhat
