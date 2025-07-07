@@ -1,16 +1,26 @@
 {
-  "name": "bitskwela-cert-nft",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "devDependencies": {
-    "@nomicfoundation/hardhat-toolbox": "^6.0.0",
-    "hardhat": "^2.25.0"
-  }
+    "name": "bitskwela-cert-nft",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "compile": "npx hardhat compile",
+        "test": "npx hardhat test",
+        "format": "npx prettier . --write"
+    },
+    "keywords": [
+        "hardhat",
+        "solidity",
+        "nft",
+        "certificates",
+        "web3",
+        "bitskwela"
+    ],
+    "author": "Bitskwela Web3 Development Interns",
+    "license": "MIT",
+    "description": "Certificate-as-NFT smart contract project for Bitskwela DML",
+    "devDependencies": {
+        "@nomicfoundation/hardhat-toolbox": "^6.0.0",
+        "hardhat": "^2.25.0",
+        "prettier": "3.6.2"
+    }
 }
