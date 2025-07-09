@@ -1,14 +1,13 @@
 Todos:
     Week 2:
-        ☐ Build CourseCertNFT
+        ✔ Build CourseCertNFT @done(25-07-09 20:55)
             Build:
-                ☐ Inputs: Recipient address, metadata URI
-                ☐ Mint function gated by an admin role (onlyRole(ADMIN_ROLE))
-                ☐ Use OpenZeppelin's AccessControl
+                ✔ Inputs: Recipient address, metadata URI @done(25-07-08 21:33)
+                ✔ Mint function gated by an admin role @done(25-07-08 21:33)
+                ✔ Use OpenZeppelin's AccessControl @done(25-07-08 21:33)
             Tasks:
-                ☐ Write unit tests (Hardhat)
-                ☐ Deploy contract to Sepolia testnet using Hardhat
-                ☐ Verify on block explorer (e.g., Etherscan via Hardhat plugin)
-
-Completed:
-    ☐ Empty
+                ✔ Deploy contract to Sepolia testnet using Hardhat @done(25-07-09 16:52)
+                ✔ Verify on block explorer (e.g., Etherscan via Hardhat plugin) @done(25-07-09 16:52)
+                ✔ Write unit tests (Hardhat) @done(25-07-09 20:55)
+            End:
+                ☐ Write Week 2 documentation

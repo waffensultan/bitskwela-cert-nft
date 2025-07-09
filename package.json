@@ -3,8 +3,8 @@
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
-        "compile": "npx hardhat compile",
-        "test": "npx hardhat test",
+        "contract:compile": "npx hardhat compile",
+        "contract:test": "npx hardhat test",
         "format": "npx prettier . --write"
     },
     "keywords": [
@@ -22,5 +22,9 @@
         "@nomicfoundation/hardhat-toolbox": "^6.0.0",
         "hardhat": "^2.25.0",
         "prettier": "3.6.2"
+    },
+    "dependencies": {
+        "@openzeppelin/contracts": "^5.3.0",
+        "dotenv": "^17.1.0"
     }
 }
