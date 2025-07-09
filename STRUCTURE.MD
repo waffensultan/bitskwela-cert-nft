@@ -2,12 +2,8 @@ bitskwela-cert-nft/
 ├── contracts/ # ✅ Solidity smart contracts
 │ └── CourseCertNFT.sol # Main ERC721 smart contract
 │
-├── scripts/ # ✅ Hardhat deploy & mint scripts
-│ └── deploy.js
-│ └── mintCert.js
-│
 ├── test/ # ✅ Hardhat unit tests
-│ └── CourseCertNFT.test.js
+│ └── CourseCertNFT.ts
 │
 ├── metadata/ # ✅ NFT metadata & JSON files
 │ └── sample-cert.json
@@ -34,8 +30,4 @@ bitskwela-cert-nft/
 │ │ └── urls.py
 │ └── ...
 │
-├── .env # Secrets (e.g., private key, IPFS API keys)
-├── hardhat.config.js # Hardhat config
-├── README.md # Setup & dev guide
-└── docs/ # Internal wiki, flow diagrams, guides
-└── architecture.md
+└── ...
