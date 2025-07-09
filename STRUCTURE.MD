@@ -1,3 +1,4 @@
+```text
 bitskwela-cert-nft/
 ├── contracts/ # ✅ Solidity smart contracts
 │ └── CourseCertNFT.sol # Main ERC721 smart contract
@@ -31,3 +32,4 @@ bitskwela-cert-nft/
 │ └── ...
 │
 └── ...
+```
