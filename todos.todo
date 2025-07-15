@@ -1,4 +1,4 @@
-Todos:
+TODOS:
     Week 2:
         ✔ Build CourseCertNFT @done(25-07-09 20:55)
             Build:
@@ -10,4 +10,14 @@ Todos:
                 ✔ Verify on block explorer (e.g., Etherscan via Hardhat plugin) @done(25-07-09 16:52)
                 ✔ Write unit tests (Hardhat) @done(25-07-09 20:55)
             End:
-                ☐ Write Week 2 documentation
+                ✔ Write Week 2 documentation @done(25-07-15 12:21)
+    Week 3:
+        ☐ Build
+            ☐ @frontend Certificate metadata generator (name, description, image, etc)
+            ☐ @backend Python script that manipulates placeholder certificate image with user metadata
+                ☐ @backend @deployment Deploy Python script on Render
+            ☐ @frontend Modify metadata generator to call API (The Python script that manipulates image)
+                ☐ Follow ERC721Metadata JSON Schema (https://github.com/ethereum/ercs/blob/master/ERCS/erc-721.md)
+        ☐ Output
+            ☐ Functional NFT with complete metadata
+            ☐ Show demo minting a sample NFT and share link
