@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: 'Unbounded';
+    src: url('/fonts/Unbounded.ttf') format("truetype");
+}
+
 html,
 body {
     @apply bg-white dark:bg-gray-950;

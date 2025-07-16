@@ -1,15 +1,17 @@
-import {
-    Links,
-    Meta,
-    Outlet,
-    Scripts,
-    ScrollRestoration,
-    LiveReload,
-} from "@remix-run/react";
-import type { LinksFunction } from "@remix-run/node";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, LiveReload } from "@remix-run/react";
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
+
+import { Toaster } from "~/components/ui/sonner";
 
 import styles from "~/tailwind.css?url";
+import sonnerStyles from "sonner/dist/styles.css?url";
 import "./tailwind.css";
+
+const isProduction = process.env.NODE_ENV === "production";
+
+export const meta: MetaFunction = () => {
+    return [{ title: "Metadata Generator | Bitskwela" }];
+};
 
 export const links: LinksFunction = () => [
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -26,11 +28,13 @@ export const links: LinksFunction = () => [
         rel: "stylesheet",
         href: styles,
     },
+    {
+        rel: "stylesheet",
+        href: sonnerStyles,
+    },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
-    const isProduction = process.env.NODE_ENV === "production";
-
     return (
         <html lang="en">
             <head>
@@ -44,6 +48,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 {!isProduction && <LiveReload />}
                 <ScrollRestoration />
                 <Scripts />
+                <Toaster />
             </body>
         </html>
     );
