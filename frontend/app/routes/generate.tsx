@@ -54,7 +54,7 @@ export default function GenerateRoute() {
             return false;
         }
 
-        // Optional: Validate image as a proper URL
+        // Validate image as a proper URL
         try {
             new URL(image);
         } catch {
