@@ -30,6 +30,8 @@ type CopyTarget = "metadata" | "ipfs";
 export default function GenerateRoute() {
     const envData = useLoaderData<typeof loader>();
 
+    const [ipfsPinSuccessful, setIpfsPinSuccessful] = useState<OperationStatus>(undefined);
+    const [ipfsUrl, setIpfsUrl] = useState<undefined | string>(undefined);
     const [metadata, setMetadata] = useState({
         name: "",
         description: "",
@@ -39,8 +41,6 @@ export default function GenerateRoute() {
         metadata: undefined,
         ipfs: undefined,
     });
-    const [ipfsPinSuccessful, setIpfsPinSuccessful] = useState<OperationStatus>(undefined);
-    const [ipfsUrl, setIpfsUrl] = useState<undefined | string>(undefined);
 
     const handleInputChange = (field: string, value: string) => {
         setMetadata((prev) => ({ ...prev, [field]: value }));
@@ -49,19 +49,17 @@ export default function GenerateRoute() {
     const fieldsAreValid = (): boolean => {
         const { name, description, image } = metadata;
 
-        // Basic non-empty checks
         if (!name.trim() || !description.trim() || !image.trim()) {
             return false;
         }
 
-        // Validate image as a proper URL
         try {
             new URL(image);
+
+            return true;
         } catch {
             return false;
         }
-
-        return true;
     };
 
     const copyTextToClipboard = async (text: string, target: CopyTarget) => {
@@ -212,7 +210,6 @@ export default function GenerateRoute() {
                         </div>
 
                         <div className="flex flex-col gap-2">
-                            {/* 🔵 Pin to IPFS Button */}
                             <Button
                                 onClick={pinToIpfs}
                                 disabled={
@@ -246,7 +243,6 @@ export default function GenerateRoute() {
                                           : "Pin to IPFS"}
                             </Button>
 
-                            {/* 📋 Copy IPFS URL Button */}
                             <Button
                                 onClick={() => ipfsUrl && copyTextToClipboard(ipfsUrl, "ipfs")}
                                 disabled={!ipfsUrl || ipfsPinSuccessful === "loading"}
@@ -257,7 +253,6 @@ export default function GenerateRoute() {
                                 }`}
                             >
                                 <span className="relative w-full h-full">
-                                    {/* Smooth layered text */}
                                     <span
                                         className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
                                             copySuccessful.ipfs === "success"
@@ -286,7 +281,6 @@ export default function GenerateRoute() {
                                 </span>
                             </Button>
 
-                            {/* 🔁 Retry Button (if error) */}
                             {ipfsPinSuccessful === "error" && (
                                 <Button
                                     onClick={pinToIpfs}
