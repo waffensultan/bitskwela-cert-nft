@@ -251,7 +251,125 @@ export default function GenerateRoute() {
                 </Card>
 
                 {/* METADATA PREVIEW SECTION */}
-                <Card className="w-full max-w-full min-w-0 bg-slate-800/50 border-slate-700 backdrop-blur-sm h-full">
+                <Card className="w-full max-w-full min-w-0 bg-slate-800/50 border-slate-700 backdrop-blur-sm h-full flex flex-col">
+                    <CardHeader>
+                        <CardTitle className="text-white flex items-center gap-2">
+                            <SettingsIcon className="text-blue-500" />
+                            <h2>Metadata Preview</h2>
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-6 flex flex-col flex-grow">
+                        <div className="flex flex-col flex-grow overflow-hidden bg-slate-900/50 border-slate-700 rounded-lg p-4 border">
+                            <pre className="text-slate-400 text-sm whitespace-pre-wrap break-words flex-grow overflow-auto transition duration-500">
+                                {JSON.stringify(
+                                    {
+                                        ...metadata,
+                                        attributes: attributes.filter(
+                                            (attr) => attr.value.trim() !== "",
+                                        ),
+                                    },
+                                    null,
+                                    2,
+                                )}
+                            </pre>
+                            <button
+                                onClick={() =>
+                                    copyTextToClipboard(
+                                        JSON.stringify({
+                                            ...metadata,
+                                            attributes: attributes.filter(
+                                                (attr) => attr.value.trim() !== "",
+                                            ),
+                                        }),
+                                        "metadata",
+                                    )
+                                }
+                                className="text-slate-400 self-end mt-2"
+                            >
+                                {copySuccessful.metadata ? <CopyCheckIcon /> : <CopyIcon />}
+                            </button>
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                            <Button
+                                onClick={() => pinToIpfs()}
+                                disabled={
+                                    !fieldsAreValid() ||
+                                    ipfsPinStatus === "loading" ||
+                                    ipfsPinStatus === "success"
+                                }
+                                className={`w-full text-white font-semibold py-3 text-lg rounded-md transition duration-200 ease-in-out flex items-center justify-center gap-2 ${
+                                    ipfsPinStatus === "success"
+                                        ? "bg-green-600"
+                                        : "bg-yellow-600 hover:bg-yellow-700"
+                                } ${!fieldsAreValid() || (ipfsPinStatus === "success" && "opacity-60 cursor-not-allowed")} ${ipfsPinStatus === "loading" && "cursor-progress"}`}
+                            >
+                                {ipfsPinStatus === "loading" && (
+                                    <Loader2Icon className="w-5 h-5 animate-spin" />
+                                )}
+                                {ipfsPinStatus === "loading"
+                                    ? "Pinning..."
+                                    : ipfsPinStatus === "success"
+                                      ? "Pinned!"
+                                      : ipfsPinStatus === "error"
+                                        ? "Failed. Retry?"
+                                        : !fieldsAreValid()
+                                          ? "Fill out all fields before pinning"
+                                          : "Pin to IPFS"}
+                            </Button>
+
+                            <Button
+                                onClick={() => ipfsUrl && copyTextToClipboard(ipfsUrl, "ipfs")}
+                                disabled={!ipfsUrl || ipfsPinStatus === "loading"}
+                                className={`w-full mt-2 bg-yellow-800 text-white font-semibold py-5 rounded-md transition duration-200 ease-in-out flex items-center justify-center text-lg ${
+                                    ipfsUrl && ipfsPinStatus !== "loading"
+                                        ? "hover:bg-yellow-900"
+                                        : "opacity-60 cursor-not-allowed"
+                                }`}
+                            >
+                                <span className="relative w-full h-full">
+                                    <span
+                                        className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
+                                            copySuccessful.ipfs === "success"
+                                                ? "opacity-100"
+                                                : "opacity-0"
+                                        }`}
+                                    >
+                                        Copied!
+                                    </span>
+                                    <span
+                                        className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
+                                            copySuccessful.ipfs === "error"
+                                                ? "opacity-100"
+                                                : "opacity-0"
+                                        }`}
+                                    >
+                                        Failed to copy
+                                    </span>
+                                    <span
+                                        className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${
+                                            !copySuccessful.ipfs ? "opacity-100" : "opacity-0"
+                                        }`}
+                                    >
+                                        Copy IPFS URL
+                                    </span>
+                                </span>
+                            </Button>
+
+                            {ipfsPinStatus === "error" && (
+                                <Button
+                                    onClick={pinToIpfs}
+                                    className="w-full mt-2 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 text-md rounded-md transition-colors duration-200 ease-in-out"
+                                >
+                                    Retry Pinning
+                                </Button>
+                            )}
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* METADATA PREVIEW SECTION */}
+                {/* <Card className="w-full max-w-full min-w-0 bg-slate-800/50 border-slate-700 backdrop-blur-sm h-full">
                     <CardHeader>
                         <CardTitle className="text-white flex items-center gap-2">
                             <SettingsIcon className="text-blue-500" />
@@ -366,7 +484,7 @@ export default function GenerateRoute() {
                             )}
                         </div>
                     </CardContent>
-                </Card>
+                </Card> */}
             </div>
         </main>
     );
