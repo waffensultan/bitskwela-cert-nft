@@ -31,20 +31,20 @@ type CopyTarget = "metadata" | "ipfs";
 export default function GenerateRoute() {
     const envData = useLoaderData<typeof loader>();
 
-    const [ipfsPinSuccessful, setIpfsPinSuccessful] = useState<OperationStatus>(undefined);
+    const [ipfsPinStatus, setIpfsPinStatus] = useState<OperationStatus>(undefined);
     const [ipfsUrl, setIpfsUrl] = useState<undefined | string>(undefined);
-    const [attributes, setAttributes] = useState([
-        { trait_type: "Recipient", value: "" },
-        { trait_type: "Issuer", value: "Bitskwela" },
-        { trait_type: "Course", value: "" },
-        { trait_type: "Date Issued", value: "" },
-    ]);
     const [metadata, setMetadata] = useState({
         name: "",
         description: "",
         image: "",
         external_url: "",
     });
+    const [attributes, setAttributes] = useState([
+        { trait_type: "Recipient", value: "" },
+        { trait_type: "Issuer", value: "Bitskwela" },
+        { trait_type: "Course", value: "" },
+        { trait_type: "Date Issued", value: "" },
+    ]);
     const [copySuccessful, setCopySuccessful] = useState<Record<CopyTarget, OperationStatus>>({
         metadata: undefined,
         ipfs: undefined,
@@ -94,7 +94,7 @@ export default function GenerateRoute() {
     };
 
     const pinToIpfs = async () => {
-        setIpfsPinSuccessful("loading");
+        setIpfsPinStatus("loading");
         const toastId = toast.loading("Pinning metadata to IPFS...");
 
         try {
@@ -122,7 +122,7 @@ export default function GenerateRoute() {
             const url = `https://gateway.pinata.cloud/ipfs/${cid}`;
 
             setTimeout(() => {
-                setIpfsPinSuccessful("success");
+                setIpfsPinStatus("success");
                 setIpfsUrl(url);
                 toast.dismiss(toastId);
                 toast.success("Pinned metadata to IPFS!");
@@ -130,11 +130,11 @@ export default function GenerateRoute() {
         } catch (error) {
             console.warn("Failed to pin:", error);
 
-            setIpfsPinSuccessful("error");
+            setIpfsPinStatus("error");
             toast.dismiss(toastId);
             toast.error(`Failed to pin: ${error}`);
             setTimeout(() => {
-                setIpfsPinSuccessful(undefined);
+                setIpfsPinStatus(undefined);
             }, 1500);
         }
     };
@@ -292,26 +292,26 @@ export default function GenerateRoute() {
 
                         <div className="flex flex-col gap-2">
                             <Button
-                                onClick={pinToIpfs}
+                                onClick={() => pinToIpfs()}
                                 disabled={
                                     !fieldsAreValid() ||
-                                    ipfsPinSuccessful === "loading" ||
-                                    ipfsPinSuccessful === "success"
+                                    ipfsPinStatus === "loading" ||
+                                    ipfsPinStatus === "success"
                                 }
                                 className={`w-full text-white font-semibold py-3 text-lg rounded-md transition duration-200 ease-in-out flex items-center justify-center gap-2 ${
-                                    ipfsPinSuccessful === "success"
+                                    ipfsPinStatus === "success"
                                         ? "bg-green-600"
                                         : "bg-yellow-600 hover:bg-yellow-700"
-                                } ${!fieldsAreValid() || (ipfsPinSuccessful === "success" && "opacity-60 cursor-not-allowed")} ${ipfsPinSuccessful === "loading" && "cursor-progress"}`}
+                                } ${!fieldsAreValid() || (ipfsPinStatus === "success" && "opacity-60 cursor-not-allowed")} ${ipfsPinStatus === "loading" && "cursor-progress"}`}
                             >
-                                {ipfsPinSuccessful === "loading" && (
+                                {ipfsPinStatus === "loading" && (
                                     <Loader2Icon className="w-5 h-5 animate-spin" />
                                 )}
-                                {ipfsPinSuccessful === "loading"
+                                {ipfsPinStatus === "loading"
                                     ? "Pinning..."
-                                    : ipfsPinSuccessful === "success"
+                                    : ipfsPinStatus === "success"
                                       ? "Pinned!"
-                                      : ipfsPinSuccessful === "error"
+                                      : ipfsPinStatus === "error"
                                         ? "Failed. Retry?"
                                         : !fieldsAreValid()
                                           ? "Fill out all fields before pinning"
@@ -320,9 +320,9 @@ export default function GenerateRoute() {
 
                             <Button
                                 onClick={() => ipfsUrl && copyTextToClipboard(ipfsUrl, "ipfs")}
-                                disabled={!ipfsUrl || ipfsPinSuccessful === "loading"}
+                                disabled={!ipfsUrl || ipfsPinStatus === "loading"}
                                 className={`w-full mt-2 bg-yellow-800 text-white font-semibold py-5 rounded-md transition duration-200 ease-in-out flex items-center justify-center text-lg ${
-                                    ipfsUrl && ipfsPinSuccessful !== "loading"
+                                    ipfsUrl && ipfsPinStatus !== "loading"
                                         ? "hover:bg-yellow-900"
                                         : "opacity-60 cursor-not-allowed"
                                 }`}
@@ -356,7 +356,7 @@ export default function GenerateRoute() {
                                 </span>
                             </Button>
 
-                            {ipfsPinSuccessful === "error" && (
+                            {ipfsPinStatus === "error" && (
                                 <Button
                                     onClick={pinToIpfs}
                                     className="w-full mt-2 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 text-md rounded-md transition-colors duration-200 ease-in-out"
