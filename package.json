@@ -6,6 +6,10 @@
         "contract:compile": "npx hardhat compile",
         "contract:test": "npx hardhat test",
         "frontend:dev": "npm --prefix frontend run dev",
+        "frontend:build": "npm --prefix frontend run build",
+        "frontend:lint": "npm --prefix frontend run lint",
+        "frontend:start": "npm --prefix frontend run start",
+        "frontend:typecheck": "npm --prefix frontend run typecheck",
         "format": "npx prettier . --write"
     },
     "keywords": [
