@@ -7,10 +7,8 @@ import styles from "~/tailwind.css?url";
 import sonnerStyles from "sonner/dist/styles.css?url";
 import "./tailwind.css";
 
-const isProduction = process.env.NODE_ENV === "production";
-
 export const meta: MetaFunction = () => {
-    return [{ title: "Metadata Generator | Bitskwela" }];
+    return [{ title: "Bitskwela Certificate Dashboard" }];
 };
 
 export const links: LinksFunction = () => [
