@@ -1,0 +1,1 @@
+export type OperationStatus = "success" | "loading" | "error" | undefined;

@@ -1,4 +1,4 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, LiveReload } from "@remix-run/react";
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 
 import { Toaster } from "~/components/ui/sonner";
@@ -45,7 +45,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </head>
             <body>
                 {children}
-                {!isProduction && <LiveReload />}
                 <ScrollRestoration />
                 <Scripts />
                 <Toaster />
