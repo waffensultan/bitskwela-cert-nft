@@ -3,7 +3,7 @@ import { createCookie } from "@remix-run/node";
 
 export const walletCookie = createCookie("wallet", {
     httpOnly: true,
-    secure: false, // Set to false if on local dev (HTTP)
+    secure: process.env.NODE_ENV === "production" ? true : false,
     sameSite: "strict",
     path: "/",
 });
