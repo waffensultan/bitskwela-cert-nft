@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import CountUp from "react-countup";
-import { json, redirect, useNavigate } from "@remix-run/react";
+import { useNavigate } from "@remix-run/react";
 import { ethers } from "ethers";
 import { toast } from "sonner";
 
-import { walletCookie } from "~/routes/api.set-wallet";
+import { requireNoWalletAddress } from "~/utils/auth";
 
 import { Card, CardHeader, CardTitle, CardContent } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
@@ -13,16 +13,8 @@ import StyledTooltip from "~/components/shared/styled-tooltip";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import type { OperationStatus } from "~/types/types";
 
-/* PROTECT ROUTE */
-export async function loader({ request }: LoaderFunctionArgs) {
-    const cookieHeader = request.headers.get("Cookie");
-    const wallet = await walletCookie.parse(cookieHeader);
-
-    if (wallet) {
-        return redirect("/home");
-    }
-
-    return json({ walletAddress: null });
+export async function loader(request: LoaderFunctionArgs) {
+    return await requireNoWalletAddress(request);
 }
 
 export default function IndexRoute() {
@@ -79,7 +71,7 @@ export default function IndexRoute() {
     useEffect(() => {
         if (walletAddress) {
             setTimeout(() => {
-                navigate("/home");
+                navigate("/user/home");
             }, 1500);
         }
     }, [walletAddress]);
