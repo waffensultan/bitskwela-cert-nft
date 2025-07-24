@@ -13,6 +13,7 @@ import StyledTooltip from "~/components/shared/styled-tooltip";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import type { OperationStatus } from "~/types/types";
 
+/* PROTECT ROUTE */
 export async function loader({ request }: LoaderFunctionArgs) {
     const cookieHeader = request.headers.get("Cookie");
     const wallet = await walletCookie.parse(cookieHeader);
