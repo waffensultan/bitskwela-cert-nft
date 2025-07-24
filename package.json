@@ -5,6 +5,7 @@
     "scripts": {
         "contract:compile": "npx hardhat compile",
         "contract:test": "npx hardhat test",
+        "contract:sepolia": "npx hardhat ignition deploy ./ignition/modules/CourseCertNFT.ts --network sepolia",
         "frontend:dev": "npm --prefix frontend run dev",
         "frontend:build": "npm --prefix frontend run build",
         "frontend:lint": "npm --prefix frontend run lint",
