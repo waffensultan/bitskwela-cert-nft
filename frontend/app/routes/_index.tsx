@@ -1,14 +1,28 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "@remix-run/react";
-import { ethers } from "ethers";
 import CountUp from "react-countup";
+import { json, redirect, useNavigate } from "@remix-run/react";
+import { ethers } from "ethers";
 import { toast } from "sonner";
+
+import { walletCookie } from "~/routes/api.set-wallet";
 
 import { Card, CardHeader, CardTitle, CardContent } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
 import StyledTooltip from "~/components/shared/styled-tooltip";
 
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import type { OperationStatus } from "~/types/types";
+
+export async function loader({ request }: LoaderFunctionArgs) {
+    const cookieHeader = request.headers.get("Cookie");
+    const wallet = await walletCookie.parse(cookieHeader);
+
+    if (wallet) {
+        return redirect("/home");
+    }
+
+    return json({ walletAddress: null });
+}
 
 export default function IndexRoute() {
     const navigate = useNavigate();
@@ -36,31 +50,35 @@ export default function IndexRoute() {
             const signer = await provider.getSigner();
             const address = await signer.getAddress();
 
+            const formData = new FormData();
+            formData.append("walletAddress", address);
+
+            const result = await fetch("/api/set-wallet", {
+                method: "POST",
+                body: formData,
+                credentials: "include",
+            });
+
+            if (!result.ok) {
+                throw new Error("Failed authenticating!");
+            }
+
             setTimeout(() => {
                 setWalletAddress(address);
-                localStorage.setItem("wallet_adddress", address);
                 setWalletAddressStatus("success");
                 toast.success("Connected to MetaMask Wallet!");
             }, 1500);
-        } catch {
+        } catch (error) {
             setTimeout(() => {
-                toast.error("Failed to connect wallet!");
+                toast.error(`Failed to connect wallet! ${error}`);
             }, 1500);
         }
     }
 
     useEffect(() => {
-        const address = localStorage.getItem("wallet_address");
-
-        if (address) {
-            setWalletAddress(address);
-        }
-    }, []);
-
-    useEffect(() => {
         if (walletAddress) {
             setTimeout(() => {
-                navigate("/directory");
+                navigate("/home");
             }, 1500);
         }
     }, [walletAddress]);
