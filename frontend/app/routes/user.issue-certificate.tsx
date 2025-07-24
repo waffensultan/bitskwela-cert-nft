@@ -1,5 +1,8 @@
 import { json, redirect } from "@remix-run/node";
 
+import { Card, CardHeader, CardTitle, CardContent } from "~/components/ui/card";
+import { Button } from "~/components/ui/button";
+
 import { getWalletAddress } from "~/utils/auth";
 import { isContractOwner } from "~/utils/contract";
 
@@ -24,11 +27,57 @@ export async function loader(request: LoaderFunctionArgs) {
 }
 
 export default function IssueCertificateRoute() {
-    /** BUILD THE UI HERE  */
-
     return (
-        <div>
-            <div></div>
-        </div>
+        <main className="h-screen w-screen flex flex-col justify-center items-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-yellow-100 via-orange-200 to-amber-500">
+            <div className=" w-1/3 h-3/4 grid grid-cols-1 gap-4">
+                <Card className=" bg-white/95 border-yellow-500 backdrop-blur-sm flex flex-col justify-center items-center">
+                    <CardHeader>
+                        <CardTitle className="flex flex-col items-center text-white gap-2 font-unbounded bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+                            <img className="w-32 mb-2" src="/assets/logo.png" alt="Certificate" />
+                            <div>
+                                <h1 className="text-center text-2xl mb-2">Issue a Certificate</h1>
+                                <p className="text-xs text-slate-600 text-center font-light">
+                                    Restricted to contract owner. Issue NFT certificates to
+                                    learners.
+                                </p>
+                            </div>
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex flex-col gap-4 w-full px-6 pb-6 ">
+                        <img
+                            className="w-40 self-center my-5"
+                            src="/assets/certificate.svg"
+                            alt="Certificate"
+                        />
+                        <form className="flex flex-col gap-4 w-full">
+                            <div className="flex flex-col gap-2">
+                                <label className="text-sm text-black">Wallet Address</label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter wallet address"
+                                    className="px-4 py-2 rounded-2xl  bg-white text-black placeholder-slate-400 border border-slate-300 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                />
+                            </div>
+
+                            <div className="flex flex-col gap-2">
+                                <label className="text-sm text-black">NFT Metadata Link</label>
+                                <input
+                                    type="text"
+                                    placeholder="Paste metadata link"
+                                    className="px-4 py-2 rounded-2xl bg-white text-black placeholder-slate-400 border border-slate-300 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                                />
+                            </div>
+
+                            <button
+                                type="submit"
+                                className="mt-4 w-full rounded-2xl py-3 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold transition duration-200"
+                            >
+                                Mint Certificate
+                            </button>
+                        </form>
+                    </CardContent>
+                </Card>
+            </div>
+        </main>
     );
 }
