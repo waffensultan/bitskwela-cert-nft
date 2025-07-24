@@ -10,7 +10,6 @@ import { isContractOwner } from "~/utils/contract";
 
 import type { LoaderFunctionArgs } from "@remix-run/node";
 
-/* PROTECT ROUTE */
 export async function loader(request: LoaderFunctionArgs) {
     const res = await getWalletAddress(request);
     const { walletAddress } = await res.json();
