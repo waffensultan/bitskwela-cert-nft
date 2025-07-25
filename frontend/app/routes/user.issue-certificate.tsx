@@ -1,7 +1,6 @@
-import { json, redirect } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 
 import { Card, CardHeader, CardTitle, CardContent } from "~/components/ui/card";
-import { Button } from "~/components/ui/button";
 
 import { getWalletAddress } from "~/utils/auth";
 import { isContractOwner } from "~/utils/contract";
@@ -16,12 +15,11 @@ export async function loader(request: LoaderFunctionArgs) {
         return redirect("/");
     }
 
-    /* TEMPORARILY DISABLING ADMIN CHECKS */
-    // const isAdmin = await isContractOwner(walletAddress);
+    const isAdmin = await isContractOwner(walletAddress);
 
-    // if (!isAdmin) {
-    //     return redirect("/user/home");
-    // }
+    if (!isAdmin) {
+        return redirect("/user/home");
+    }
 
     return null;
 }

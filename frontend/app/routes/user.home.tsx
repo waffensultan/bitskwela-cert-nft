@@ -49,9 +49,7 @@ export default function HomeRoute() {
                     <CardContent className="flex flex-col gap-3 w-full">
                         {Object.entries(routes).map(([label, value]) => {
                             const isIssueACertificate = label === "Issue a Certificate";
-                            /* TEMPORARILY DISABLING ADMIN CHECKS */
-                            // const isDisabled = isIssueACertificate && !isAdmin;
-                            const isDisabled = false;
+                            const isDisabled = isIssueACertificate && !isAdmin;
                             const link = isDisabled ? "" : value.route;
 
                             return (
