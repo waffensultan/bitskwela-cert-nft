@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, json } from "@remix-run/node";
+import { type ActionFunctionArgs, type LoaderFunctionArgs, json } from "@remix-run/node";
 import { createCookie } from "@remix-run/node";
 
 export const walletCookie = createCookie("wallet", {
@@ -12,6 +12,10 @@ function walletAddressIsValid(walletAddress: any) {
     if (typeof walletAddress !== "string" || !/^0x[a-fA-F0-9]{40}$/.test(walletAddress)) {
         return false;
     }
+}
+
+export async function loader() {
+    return json({ error: "Method Not Allowed" }, { status: 405 });
 }
 
 export async function action({ request }: ActionFunctionArgs) {

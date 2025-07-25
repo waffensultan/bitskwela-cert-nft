@@ -35,6 +35,10 @@ export default function HomeRoute() {
             route: "/user/view-certificate",
             description: "Search and view publicly available NFT certificates.",
         },
+        "Generate NFT Metadata": {
+            route: "/generate-metadata",
+            description: "Create ERC-721 compliant NFT metadata.",
+        },
     };
 
     return (
