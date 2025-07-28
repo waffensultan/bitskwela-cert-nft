@@ -1,4 +1,5 @@
 import { redirect } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 
 import { getWalletAddress } from "~/utils/auth";
 import { isContractOwner } from "~/utils/contract";
@@ -15,13 +16,11 @@ export async function loader(request: LoaderFunctionArgs) {
 
     const isAdmin = await isContractOwner(walletAddress);
 
-    if (!isAdmin) {
-        return redirect("/user/home");
-    }
-
-    return null;
+    return { isAdmin };
 }
 
 export default function ViewCertificateRoute() {
-    return <div>WIP</div>;
+    const { isAdmin } = useLoaderData<typeof loader>();
+
+    return <div>Hello</div>;
 }
