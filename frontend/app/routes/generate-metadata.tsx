@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
 import { Card, CardHeader, CardTitle, CardContent } from "~/components/ui/card";
@@ -8,7 +9,10 @@ import { Textarea } from "~/components/ui/textarea";
 import { Label } from "~/components/ui/label";
 import { toast } from "sonner";
 
+import { getWalletAddress } from "~/utils/auth";
+
 import type { OperationStatus } from "~/types/types";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 
 import {
     SunIcon,
@@ -20,7 +24,14 @@ import {
     DnaIcon,
 } from "lucide-react";
 
-export function loader() {
+export async function loader(request: LoaderFunctionArgs) {
+    const res = await getWalletAddress(request);
+    const { walletAddress } = await res.json();
+
+    if (!walletAddress) {
+        return redirect("/");
+    }
+
     return {
         PINATA_API_KEY: process.env.PINATA_API_KEY,
         PINATA_API_SECRET: process.env.PINATA_API_SECRET,
