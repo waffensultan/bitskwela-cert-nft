@@ -22,7 +22,7 @@ export async function loader(request: LoaderFunctionArgs) {
 export default function ViewCertificateRoute() {
     const { isAdmin } = useLoaderData<typeof loader>();
 
-    return isAdmin ? AdminUserUI : RegularUserUI;
+    return isAdmin ? <AdminUserUI /> : <RegularUserUI />;
 }
 
 function RegularUserUI() {
