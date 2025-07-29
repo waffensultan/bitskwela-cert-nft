@@ -63,7 +63,8 @@ export default function IndexRoute() {
             }, 1500);
         } catch (error) {
             setTimeout(() => {
-                toast.error(`Failed to connect wallet! ${error}`);
+                toast.error(`Failed to connect MetaMask wallet!`);
+                setWalletAddressStatus(undefined);
             }, 1500);
         }
     }
@@ -98,15 +99,10 @@ export default function IndexRoute() {
                                 alt="metamask-icon"
                                 className="w-4 h-4"
                             />
-                            {walletAddressStatus === "loading" ? (
-                                <span>Connecting...</span>
-                            ) : walletAddressStatus === "error" ? (
-                                <span>Try Again</span>
-                            ) : walletAddress !== undefined ? (
-                                <span>Connected</span>
-                            ) : (
-                                <span>Connect MetaMask Wallet</span>
-                            )}
+                            {walletAddressStatus === "loading" && <span>Connecting...</span>}
+                            {walletAddressStatus === "error" && <span>Try Again</span>}
+                            {walletAddressStatus === "success" && <span>Connected</span>}
+                            {!walletAddressStatus && <span>Connect MetaMask Wallet</span>}
                         </Button>
                     </CardContent>
                 </Card>
