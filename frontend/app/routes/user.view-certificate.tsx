@@ -22,5 +22,13 @@ export async function loader(request: LoaderFunctionArgs) {
 export default function ViewCertificateRoute() {
     const { isAdmin } = useLoaderData<typeof loader>();
 
-    return <div>Hello</div>;
+    return isAdmin ? AdminUserUI : RegularUserUI;
+}
+
+function RegularUserUI() {
+    return <div>This is for regular users</div>;
+}
+
+function AdminUserUI() {
+    return <div>This is for admin users</div>;
 }
