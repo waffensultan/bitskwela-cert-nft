@@ -22,6 +22,7 @@ export default function IndexRoute() {
 
     const [walletAddress, setWalletAddress] = useState<undefined | string>(undefined);
     const [walletAddressStatus, setWalletAddressStatus] = useState<OperationStatus>(undefined);
+    /* We can refactor this to eventually fetch real statistics from contract */
     const [platformStatistics, setPlatformStatistics] = useState({
         "Total Certificates": 12847,
         "Active Holders": 3921,
