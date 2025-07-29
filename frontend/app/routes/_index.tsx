@@ -118,7 +118,7 @@ export default function IndexRoute() {
                         {Object.entries(platformStatistics).map(([label, value]) => (
                             <div
                                 key={label}
-                                className="flex flex-col justify-center items-center gap-2"
+                                className="flex flex-col justify-center items-center gap-2 w-full"
                             >
                                 <h2
                                     className={`text-3xl font-bold bg-gradient-to-r ${label === "Active Holders" ? "from-green-400 to-emerald-600" : "from-purple-400 to-blue-400"} bg-clip-text text-transparent`}
