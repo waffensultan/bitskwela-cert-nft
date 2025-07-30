@@ -28,6 +28,7 @@ export function CertificateCard({
                         src={imageUrl}
                         alt={title}
                         className="rounded-md border w-full object-contain max-h-48"
+                        loading="lazy"
                     />
                 </CardHeader>
                 <CardContent className="px-4 pb-4">

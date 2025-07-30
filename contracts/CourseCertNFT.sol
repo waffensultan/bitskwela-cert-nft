@@ -41,6 +41,16 @@ contract CourseCertNFT is ERC721, ERC721URIStorage, AccessControl {
         return _ownedTokens[user];
     }
 
+    function getAllMintedTokens() public view onlyAdmin returns (uint256[] memory) {
+        uint256[] memory tokenIds = new uint256[](_tokenIds);
+
+        for (uint256 i = 1; i <= _tokenIds; i++) {
+            tokenIds[i - 1] = i;
+        }
+
+        return tokenIds;
+    }
+
     /// @dev The following makes minted NFTs completely non-transferrable (soulbound)
     function _update(
         address to,
@@ -68,4 +78,3 @@ contract CourseCertNFT is ERC721, ERC721URIStorage, AccessControl {
         return super.tokenURI(tokenId);
     }
 }
-
