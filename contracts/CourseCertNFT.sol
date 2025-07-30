@@ -9,6 +9,8 @@ contract CourseCertNFT is ERC721, ERC721URIStorage, AccessControl {
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
     uint256 private _tokenIds;
 
+    mapping(address => uint256[]) private _ownedTokens;
+
     event CertificateMinted(address indexed recipient, uint256 indexed tokenId, string tokenURI);
 
     constructor() ERC721("CourseCertNFT", "CERT") {
@@ -29,9 +31,14 @@ contract CourseCertNFT is ERC721, ERC721URIStorage, AccessControl {
 
         _safeMint(_recipient, newCertId);
         _setTokenURI(newCertId, _tokenURI);
+        _ownedTokens[_recipient].push(newCertId);
 
         emit CertificateMinted(_recipient, newCertId, _tokenURI);
         return newCertId;
+    }
+
+    function getCertificatesOf(address user) public view returns (uint256[] memory) {
+        return _ownedTokens[user];
     }
 
     /// @dev The following makes minted NFTs completely non-transferrable (soulbound)
