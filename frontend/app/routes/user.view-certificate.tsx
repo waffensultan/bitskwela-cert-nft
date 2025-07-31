@@ -48,11 +48,13 @@ function RegularUserUI() {
     const { certs } = useLoaderData<typeof loader>();
 
     return (
-        <main className="h-screen w-screen flex flex-col justify-center items-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-yellow-100 via-orange-200 to-amber-500">
-            <div className="h-3/4 w-11/12 bg-white rounded-xl flex flex-col items-center justify-between p-14 gap-10">
-                <h1 className="font-unbounded text-xl font-semibold self-start">My Certificates</h1>
+        <main className="flex min-h-screen w-full flex-col items-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-yellow-100 via-orange-200 to-amber-500">
+            <div className="m-16 w-11/12 rounded-xl bg-white p-14 flex flex-col items-center gap-10">
+                <h1 className="self-start font-unbounded text-xl font-semibold max-sm:self-center">
+                    My Certificates
+                </h1>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {certs.map((cert) => (
                         <CertificateCard
                             key={cert.tokenId}
@@ -104,16 +106,16 @@ function AdminUserUI() {
     const { certs } = useLoaderData<typeof loader>();
 
     return (
-        <main className="h-screen w-screen flex flex-col justify-center items-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-yellow-100 via-orange-200 to-amber-500">
-            <div className="h-3/4 w-11/12 bg-white rounded-xl flex flex-col items-center justify-between p-14 gap-10">
-                <div className="w-full flex flex-row justify-between">
-                    <h1 className="font-unbounded text-xl font-semibold self-center">
+        <main className="flex min-h-screen w-full flex-col items-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-yellow-100 via-orange-200 to-amber-500">
+            <div className="m-16 w-11/12 rounded-xl bg-white p-14 max-md:p-7 flex flex-col items-center gap-10 max-md:gap-5">
+                <div className="flex w-full flex-row justify-between gap-5 max-lg:flex-col max-lg:items-center max-sm:gap-3">
+                    <h1 className="font-unbounded text-xl font-semibold text-center self-center max-md:self-center max-md:text-base">
                         Most recent NFT Certificates
                     </h1>
                     <SearchBar />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     {certs.map((cert) => (
                         <CertificateCard
                             key={cert.tokenId}
