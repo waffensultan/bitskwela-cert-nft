@@ -112,4 +112,30 @@ describe("CourseCertNFT", function () {
             contract.connect(recipient).transferFrom(recipient.address, deployer.address, tokenId),
         ).to.be.revertedWith("Soulbound: Transfer failed");
     });
+
+    it("Function getCertificatesOf() returns correct token IDs for a user", async function () {
+        const { contract, deployer, recipient } = await loadFixture(deployFixture);
+
+        await contract.connect(deployer).mintCert(recipient.address, "ipfs://cert1");
+        await contract.connect(deployer).mintCert(recipient.address, "ipfs://cert2");
+
+        await contract.connect(deployer).mintCert(deployer.address, "ipfs://cert3");
+
+        const recipientCerts = await contract.getCertificatesOf(recipient.address);
+        const deployerCerts = await contract.getCertificatesOf(deployer.address);
+
+        expect(recipientCerts.map((x) => Number(x))).to.deep.equal([1, 2]);
+        expect(deployerCerts.map((x) => Number(x))).to.deep.equal([3]);
+    });
+
+    it("Function getAllMintedTokens() returns all token IDs in order", async function () {
+        const { contract, deployer, recipient } = await loadFixture(deployFixture);
+
+        await contract.connect(deployer).mintCert(recipient.address, "ipfs://cert1");
+        await contract.connect(deployer).mintCert(recipient.address, "ipfs://cert2");
+        await contract.connect(deployer).mintCert(deployer.address, "ipfs://cert3");
+
+        const allTokens = await contract.getAllMintedTokens();
+        expect(allTokens.map((x) => Number(x))).to.deep.equal([1, 2, 3]);
+    });
 });

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
 import { Card, CardHeader, CardTitle, CardContent } from "~/components/ui/card";
@@ -8,7 +9,10 @@ import { Textarea } from "~/components/ui/textarea";
 import { Label } from "~/components/ui/label";
 import { toast } from "sonner";
 
+import { getWalletAddress } from "~/utils/auth";
+
 import type { OperationStatus } from "~/types/types";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 
 import {
     SunIcon,
@@ -20,7 +24,14 @@ import {
     DnaIcon,
 } from "lucide-react";
 
-export function loader() {
+export async function loader(request: LoaderFunctionArgs) {
+    const res = await getWalletAddress(request);
+    const { walletAddress } = await res.json();
+
+    if (!walletAddress) {
+        return redirect("/");
+    }
+
     return {
         PINATA_API_KEY: process.env.PINATA_API_KEY,
         PINATA_API_SECRET: process.env.PINATA_API_SECRET,
@@ -141,19 +152,19 @@ export default function GenerateRoute() {
     };
 
     return (
-        <main className="min-h-screen bg-gradient-to-tr from-black via-gray-900 to-gray-800 py-10 flex items-center justify-center flex-col w-full">
+        <main className="min-h-screen bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-yellow-100 via-orange-200 to-amber-500 py-10 flex items-center justify-center flex-col w-full">
             {/* HEADER SECTION */}
             <div className="flex justify-center items-center gap-5 pb-10 px-7">
-                <SunIcon className="w-10 h-10 lg:h-8 lg:w-8 text-yellow-400" />
-                <h1 className="text-lg lg:text-3xl text-center font-semibold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent font-unbounded">
+                <SunIcon className="w-10 h-10 lg:h-8 lg:w-8 text-white" />
+                <h1 className="text-lg lg:text-3xl text-center font-semibold text-white font-unbounded">
                     Bitskwela Certificate NFT Metadata Generator
                 </h1>
-                <SunIcon className="w-10 h-10 lg:h-8 lg:w-8 text-yellow-400" />
+                <SunIcon className="w-10 h-10 lg:h-8 lg:w-8 text-white" />
             </div>
 
             {/* FORM SECTION */}
             <div className="w-full grid gap-8 lg:grid-cols-2 lg:max-w-6xl lg:mx-auto flex-grow">
-                <Card className="w-full max-w-full bg-slate-800/50 border-slate-700 backdrop-blur-sm h-full">
+                <Card className="w-full max-w-full bg-slate-800 border-slate-700 backdrop-blur-sm h-full">
                     <CardHeader>
                         <CardTitle className="text-white flex items-center gap-2">
                             <ImageIcon />
@@ -252,7 +263,7 @@ export default function GenerateRoute() {
                 </Card>
 
                 {/* METADATA PREVIEW SECTION */}
-                <Card className="w-full max-w-full min-w-0 bg-slate-800/50 border-slate-700 backdrop-blur-sm h-full flex flex-col">
+                <Card className="w-full max-w-full min-w-0 bg-slate-800 border-slate-700 backdrop-blur-sm h-full flex flex-col">
                     <CardHeader>
                         <CardTitle className="text-white flex items-center gap-2">
                             <SettingsIcon className="text-blue-500" />
