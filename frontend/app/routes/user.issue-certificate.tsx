@@ -56,8 +56,6 @@ export default function IssueCertificateRoute() {
                 }),
             });
 
-            console.log("Minting certificate 2....");
-
             const data = await res.json();
 
             if (!data.success) {

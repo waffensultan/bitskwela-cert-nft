@@ -21,6 +21,13 @@ export async function action(request: ActionFunctionArgs) {
     const walletRes = await getWalletAddress(request);
     const { walletAddress } = await walletRes.json();
 
+    if (!walletAddress) {
+        return json(
+            { success: false, error: "Forbidden: You are not authenticated" },
+            { status: 403 },
+        );
+    }
+
     const isAdmin = await isContractOwner(walletAddress);
     if (!isAdmin) {
         return json(

@@ -20,11 +20,11 @@ export async function loader(request: LoaderFunctionArgs) {
 
     const isAdmin = await isContractOwner(walletAddress);
 
-    return json({ isAdmin });
+    return json({ isAdmin, walletAddress });
 }
 
 export default function HomeRoute() {
-    const { isAdmin } = useLoaderData<typeof loader>();
+    const { isAdmin, walletAddress } = useLoaderData<typeof loader>();
 
     const routes = {
         "Issue a Certificate": {
@@ -41,8 +41,19 @@ export default function HomeRoute() {
         },
     };
 
+    async function logout() {
+        await fetch("/api/logout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        window.location.href = "/";
+    }
+
     return (
-        <main className="min-h-screen flex flex-col justify-center items-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-yellow-100 via-orange-200 to-amber-500">
+        <main className="gap-10 min-h-screen flex flex-col justify-center items-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-yellow-100 via-orange-200 to-amber-500">
             <div className="grid grid-cols-1 gap-4">
                 <Card className="bg-stone-100 border-yellow-500 backdrop-blur-sm flex flex-col justify-center items-center">
                     <CardHeader>
@@ -57,7 +68,7 @@ export default function HomeRoute() {
                             const link = isDisabled ? "" : value.route;
 
                             return (
-                                <Link key={label} to={link}>
+                                <Link key={label} to={link} target="_blank">
                                     <Button
                                         disabled={isDisabled}
                                         className="group h-15 flex justify-between w-full bg-slate-700 border border-slate-600 hover:bg-blue-500 hover:border-blue-400 transition-all rounded-xl py-4 text-left text-white shadow-md hover:shadow-lg"
@@ -73,6 +84,36 @@ export default function HomeRoute() {
                                 </Link>
                             );
                         })}
+                    </CardContent>
+                </Card>
+
+                <Card className="bg-stone-100 border-yellow-500 backdrop-blur-sm w-full max-w-md">
+                    <CardHeader>
+                        <CardTitle className="text-white font-unbounded bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+                            Profile
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="flex items-center justify-between gap-4">
+                            <div className="flex items-center gap-3">
+                                <img
+                                    src={`https://api.dicebear.com/7.x/identicon/svg?seed=${walletAddress}`}
+                                    alt="Profile"
+                                    className="w-10 h-10 rounded-full border border-stone-400 shadow-sm"
+                                />
+                                <span className="font-mono text-sm text-stone-700">
+                                    {walletAddress.slice(0, 6) + "..." + walletAddress.slice(-4)}
+                                </span>
+                            </div>
+
+                            <Button
+                                onClick={() => logout()}
+                                type="button"
+                                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md shadow-sm"
+                            >
+                                Logout
+                            </Button>
+                        </div>
                     </CardContent>
                 </Card>
             </div>
