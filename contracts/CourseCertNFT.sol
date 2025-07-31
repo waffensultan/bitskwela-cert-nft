@@ -41,7 +41,7 @@ contract CourseCertNFT is ERC721, ERC721URIStorage, AccessControl {
         return _ownedTokens[user];
     }
 
-    function getAllMintedTokens() public view onlyAdmin returns (uint256[] memory) {
+    function getAllMintedTokens() public view returns (uint256[] memory) {
         uint256[] memory tokenIds = new uint256[](_tokenIds);
 
         for (uint256 i = 1; i <= _tokenIds; i++) {

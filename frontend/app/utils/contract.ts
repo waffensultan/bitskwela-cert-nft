@@ -5,7 +5,6 @@ import dotenv from "dotenv";
 dotenv.config({ path: "../.env" });
 
 const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS!;
-const METAMASK_PRIVATE_KEY = process.env.METAMASK_PRIVATE_KEY!;
 const ALCHEMY_API_URL = process.env.ALCHEMY_API_URL!;
 
 export async function isContractOwner(walletAddress: string) {
@@ -48,10 +47,7 @@ export async function getCertificatesWithMetadata(walletAddress: string) {
 
 export async function getAllCertificatesWithMetadata() {
     const provider = new ethers.JsonRpcProvider(ALCHEMY_API_URL);
-
-    const wallet = new ethers.Wallet(METAMASK_PRIVATE_KEY, provider);
-
-    const contract = CourseCertNFT__factory.connect(CONTRACT_ADDRESS, wallet);
+    const contract = CourseCertNFT__factory.connect(CONTRACT_ADDRESS, provider);
 
     const tokenIds: bigint[] = await contract.getAllMintedTokens();
 
