@@ -7,6 +7,12 @@ dotenv.config({ path: "../.env" });
 const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS!;
 const ALCHEMY_API_URL = process.env.ALCHEMY_API_URL!;
 
+/**
+ * Check if the provided wallet address is the owner/admin.
+ * 
+ * @param walletAddress The Etherem address to check for owner/admin privileges.
+ * @returns A boolean indicating whether the provided wallet address is the owner/admin.
+ */
 export async function isContractOwner(walletAddress: string) {
     const provider = new ethers.JsonRpcProvider(ALCHEMY_API_URL);
 
@@ -18,6 +24,12 @@ export async function isContractOwner(walletAddress: string) {
     return isAdmin;
 }
 
+/**
+ * Retrieves tokens with their metadata for the provided wallet address.
+ * 
+ * @param walletAddress The Ethereum address to retrieve certificates with their metadata for.
+ * @returns A list of tokens for the provided wallet address..
+ */
 export async function getCertificatesWithMetadata(walletAddress: string) {
     const provider = new ethers.JsonRpcProvider(ALCHEMY_API_URL);
     const contract = CourseCertNFT__factory.connect(CONTRACT_ADDRESS, provider);
@@ -45,6 +57,11 @@ export async function getCertificatesWithMetadata(walletAddress: string) {
     return metadataList.filter((entry) => entry.metadata);
 }
 
+/**
+ * Retrieves all minted tokens with their metadata.
+ * 
+ * @returns A list of all tokens with their metadata.
+ */
 export async function getAllCertificatesWithMetadata() {
     const provider = new ethers.JsonRpcProvider(ALCHEMY_API_URL);
     const contract = CourseCertNFT__factory.connect(CONTRACT_ADDRESS, provider);

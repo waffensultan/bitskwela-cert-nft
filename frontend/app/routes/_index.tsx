@@ -36,6 +36,7 @@ export default function IndexRoute() {
                 setWalletAddressStatus("error");
                 toast.error("MetaMask is not installed. Please install it to use this feature!");
             }, 1000);
+
             return;
         }
 
@@ -79,9 +80,9 @@ export default function IndexRoute() {
     }, [walletAddress]);
 
     return (
-        <main className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-tr from-black via-gray-900 to-gray-800">
+        <main className="min-h-screen flex flex-col justify-center items-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-yellow-100 via-orange-200 to-amber-500">
             <div className="grid grid-cols-1 gap-4">
-                <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm flex flex-col justify-center items-center">
+                <Card className="bg-stone-100 border-yellow-500 backdrop-blur-sm flex flex-col justify-center items-center">
                     <CardHeader>
                         <CardTitle className="text-white gap-2 font-unbounded bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
                             <h1>Bitskwela Certificate Dashboard</h1>
@@ -101,14 +102,15 @@ export default function IndexRoute() {
                                 className="w-4 h-4"
                             />
                             {walletAddressStatus === "loading" && <span>Connecting...</span>}
-                            {walletAddressStatus === "error" && <span>Try Again</span>}
                             {walletAddressStatus === "success" && <span>Connected</span>}
-                            {!walletAddressStatus && <span>Connect MetaMask Wallet</span>}
+                            {(!walletAddressStatus || walletAddressStatus === "error") && (
+                                <span>Connect MetaMask Wallet</span>
+                            )}
                         </Button>
                     </CardContent>
                 </Card>
 
-                <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm">
+                <Card className="bg-stone-100 border-yellow-500 backdrop-blur-sm">
                     <CardHeader>
                         <CardTitle className="text-white flex justify-center items-center gap-2 font-unbounded bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
                             <h1>Platform Statistics</h1>

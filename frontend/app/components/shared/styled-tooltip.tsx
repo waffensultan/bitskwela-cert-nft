@@ -9,7 +9,7 @@ const StyledTooltip = ({ content }: StyledToolTipProps) => (
     <TooltipProvider>
         <Tooltip>
             <TooltipTrigger>
-                <div className="bg-slate-600 rounded-full flex justify-center items-center w-4 h-4">
+                <div className="rounded-full flex justify-center items-center w-4 h-4">
                     <CircleQuestionMarkIcon className="w-3 h-3 text-yellow-500" />
                 </div>
             </TooltipTrigger>

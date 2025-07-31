@@ -42,9 +42,9 @@ export default function HomeRoute() {
     };
 
     return (
-        <main className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-tr from-black via-gray-900 to-gray-800">
+        <main className="min-h-screen flex flex-col justify-center items-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-yellow-100 via-orange-200 to-amber-500">
             <div className="grid grid-cols-1 gap-4">
-                <Card className="bg-slate-800/50 border-slate-700 backdrop-blur-sm flex flex-col justify-center items-center">
+                <Card className="bg-stone-100 border-yellow-500 backdrop-blur-sm flex flex-col justify-center items-center">
                     <CardHeader>
                         <CardTitle className="text-white gap-2 font-unbounded bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
                             <h1>Bitskwela Certificate Dashboard</h1>
@@ -60,11 +60,11 @@ export default function HomeRoute() {
                                 <Link key={label} to={link}>
                                     <Button
                                         disabled={isDisabled}
-                                        className="h-15 flex justify-between w-full bg-slate-700/60 border border-slate-600 hover:bg-slate-600/70 transition-all duration-200 rounded-xl py-4 text-left text-white shadow-md hover:shadow-lg"
+                                        className="group h-15 flex justify-between w-full bg-slate-700 border border-slate-600 hover:bg-blue-500 hover:border-blue-400 transition-all rounded-xl py-4 text-left text-white shadow-md hover:shadow-lg"
                                     >
                                         <div className="flex flex-col gap-1">
                                             <h2 className="text-base font-semibold">{label}</h2>
-                                            <span className="text-xs text-slate-400 max-w-xs break-words whitespace-normal">
+                                            <span className="text-xs text-slate-300 max-w-xs break-words whitespace-normal group-hover:text-white">
                                                 {value.description}
                                             </span>
                                         </div>

@@ -4,6 +4,9 @@ import { walletCookie } from "~/routes/api.set-wallet";
 
 import type { LoaderFunctionArgs } from "@remix-run/node";
 
+/**
+ * Retrieves the user's wallet address stored in cookies.
+ */
 export async function getWalletAddress({ request }: LoaderFunctionArgs) {
     const cookieHeader = request.headers.get("Cookie");
     const wallet = await walletCookie.parse(cookieHeader);
@@ -11,6 +14,9 @@ export async function getWalletAddress({ request }: LoaderFunctionArgs) {
     return json({ walletAddress: wallet ?? null });
 }
 
+/**
+ * Disables authenticated users from accessing a ruote.
+ */
 export async function requireNoWalletAddress({ request }: LoaderFunctionArgs) {
     const cookieHeader = request.headers.get("Cookie");
     const wallet = await walletCookie.parse(cookieHeader);
