@@ -18,7 +18,7 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "~/components/ui/pagination";
-import { CertificateCard } from "~/components/ui/certificate-card";
+import { CertificateCard } from "~/components/shared/certificate-card";
 import { SearchBar } from "~/components/ui/search-bar";
 
 export async function loader(request: LoaderFunctionArgs) {
