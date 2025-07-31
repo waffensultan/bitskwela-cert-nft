@@ -1,8 +1,8 @@
 import { ethers } from "ethers";
-import { CourseCertNFT__factory } from "../../../typechain-types/factories/contracts/CourseCertNFT__factory";
-import dotenv from "dotenv";
+import { CourseCertNFT__factory } from "typechain-types/factories/contracts/CourseCertNFT__factory";
+// import dotenv from "dotenv";
 
-dotenv.config({ path: "../.env" });
+// dotenv.config({ path: "../.env" });
 
 const CONTRACT_ADDRESS = process.env.CONTRACT_ADDRESS!;
 const ALCHEMY_API_URL = process.env.ALCHEMY_API_URL!;

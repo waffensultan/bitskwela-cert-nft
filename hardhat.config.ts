@@ -15,6 +15,9 @@ const config: HardhatUserConfig = {
             accounts: [`0x${METAMASK_PRIVATE_KEY}`],
         },
     },
+    typechain: {
+        outDir: "frontend/typechain-types",
+    },
 };
 
 export default config;

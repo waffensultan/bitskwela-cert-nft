@@ -1,7 +1,7 @@
 import { type ActionFunctionArgs, json } from "@remix-run/node";
 import { ethers } from "ethers";
 
-import { CourseCertNFT__factory } from "../../../typechain-types/factories/contracts/CourseCertNFT__factory";
+import { CourseCertNFT__factory } from "typechain-types/factories/contracts/CourseCertNFT__factory";
 import { getWalletAddress } from "~/utils/auth";
 import { isContractOwner } from "~/utils/contract";
 
