@@ -31,7 +31,6 @@ import { Button } from "~/components/ui/button";
 import { toast } from "sonner";
 
 import { SearchIcon } from "lucide-react";
-// import { SearchBar } from "~/components/ui/search-bar";
 
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import type { Certificate } from "~/types/types";
@@ -117,60 +116,71 @@ function RegularUserUI({
                     My Certificates
                 </h1>
 
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                    {paginatedCerts.map((cert) => (
-                        <CertificateCard
-                            key={cert.tokenId}
-                            title={cert.metadata.name}
-                            imageUrl={cert.metadata.image}
-                            tokenId={cert.tokenId}
-                            contractAddress={contractAddress}
-                            description={cert.metadata.description ?? ""}
-                            courseName={
-                                cert.metadata.attributes.find(
-                                    (attr: any) => attr.trait_type === "Course",
-                                )?.value
-                            }
-                            dateIssued={
-                                cert.metadata.attributes.find(
-                                    (attr: any) => attr.trait_type === "Date Issued",
-                                )?.value
-                            }
-                            issuedTo={
-                                cert.metadata.attributes.find(
-                                    (attr: any) => attr.trait_type === "Recipient",
-                                )?.value
-                            }
-                        />
-                    ))}
-                </div>
+                {paginatedCerts.length === 0 ? (
+                    <div className="text-gray-500 text-center text-lg mt-10">
+                        You don't have any certificates yet.
+                    </div>
+                ) : (
+                    <>
+                        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                            {paginatedCerts.map((cert) => (
+                                <CertificateCard
+                                    key={cert.tokenId}
+                                    title={cert.metadata.name}
+                                    imageUrl={cert.metadata.image}
+                                    tokenId={cert.tokenId}
+                                    contractAddress={contractAddress}
+                                    description={cert.metadata.description ?? ""}
+                                    courseName={
+                                        cert.metadata.attributes.find(
+                                            (attr: any) => attr.trait_type === "Course",
+                                        )?.value
+                                    }
+                                    dateIssued={
+                                        cert.metadata.attributes.find(
+                                            (attr: any) => attr.trait_type === "Date Issued",
+                                        )?.value
+                                    }
+                                    issuedTo={
+                                        cert.metadata.attributes.find(
+                                            (attr: any) => attr.trait_type === "Recipient",
+                                        )?.value
+                                    }
+                                />
+                            ))}
+                        </div>
 
-                <Pagination>
-                    <PaginationContent>
-                        <PaginationItem>
-                            <PaginationPrevious
-                                href="#"
-                                onClick={() => goToPage(currentPage - 1)}
-                            />
-                        </PaginationItem>
+                        <Pagination>
+                            <PaginationContent>
+                                <PaginationItem>
+                                    <PaginationPrevious
+                                        href="#"
+                                        onClick={() => goToPage(currentPage - 1)}
+                                    />
+                                </PaginationItem>
 
-                        {[...Array(totalPages)].map((_, i) => (
-                            <PaginationItem key={i}>
-                                <PaginationLink
-                                    href="#"
-                                    isActive={i + 1 === currentPage}
-                                    onClick={() => goToPage(i + 1)}
-                                >
-                                    {i + 1}
-                                </PaginationLink>
-                            </PaginationItem>
-                        ))}
+                                {[...Array(totalPages)].map((_, i) => (
+                                    <PaginationItem key={i}>
+                                        <PaginationLink
+                                            href="#"
+                                            isActive={i + 1 === currentPage}
+                                            onClick={() => goToPage(i + 1)}
+                                        >
+                                            {i + 1}
+                                        </PaginationLink>
+                                    </PaginationItem>
+                                ))}
 
-                        <PaginationItem>
-                            <PaginationNext href="#" onClick={() => goToPage(currentPage + 1)} />
-                        </PaginationItem>
-                    </PaginationContent>
-                </Pagination>
+                                <PaginationItem>
+                                    <PaginationNext
+                                        href="#"
+                                        onClick={() => goToPage(currentPage + 1)}
+                                    />
+                                </PaginationItem>
+                            </PaginationContent>
+                        </Pagination>
+                    </>
+                )}
             </div>
         </main>
     );
@@ -307,6 +317,12 @@ function AdminUserUI({
                 </div>
 
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                    {!searchStatus && paginatedCerts.length === 0 && (
+                        <div className="col-span-full text-center text-lg font-medium text-gray-500">
+                            No certificates have been issued yet.
+                        </div>
+                    )}
+
                     {searchStatus === "loading" && (
                         <div className="col-span-full text-center text-lg font-medium text-gray-500">
                             Loading search results...
