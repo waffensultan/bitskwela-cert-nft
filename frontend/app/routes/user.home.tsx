@@ -68,7 +68,12 @@ export default function HomeRoute() {
                             const link = isDisabled ? "" : value.route;
 
                             return (
-                                <Link key={label} to={link} target="_blank">
+                                <Link
+                                    key={label}
+                                    to={link}
+                                    target="_blank"
+                                    className={`${isDisabled && "cursor-not-allowed"}`}
+                                >
                                     <Button
                                         disabled={isDisabled}
                                         className="group h-15 flex justify-between w-full bg-slate-700 border border-slate-600 hover:bg-blue-500 hover:border-blue-400 transition-all rounded-xl py-4 text-left text-white shadow-md hover:shadow-lg"
