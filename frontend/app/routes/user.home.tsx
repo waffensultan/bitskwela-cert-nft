@@ -104,6 +104,11 @@ export default function HomeRoute() {
                                 <span className="font-mono text-sm text-stone-700">
                                     {walletAddress.slice(0, 6) + "..." + walletAddress.slice(-4)}
                                 </span>
+                                {isAdmin && (
+                                    <span className="font-semibold text-xs py-1 px-2 rounded-full bg-stone-200 text-neutral-500 tracking-wider">
+                                        ADMIN
+                                    </span>
+                                )}
                             </div>
 
                             <Button
